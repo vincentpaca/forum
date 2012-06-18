@@ -1,0 +1,15 @@
+development:
+  host: localhost
+  database: name
+  logger: false
+
+test:
+  host: localhost
+  database: name
+  logger: false
+
+production:
+  host: localhost
+  database: name
+  logger: false
+
