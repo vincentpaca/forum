@@ -4,25 +4,27 @@ class Routes < Sinatra::Base
   enable :sessions
 
   get '/?' do
-    if logged_in?
+    if session['current_user']
       @current_user = session['current_user']
-      erb :index    
-    else
-      redirect '/login'
     end
-  end
+    
+    @topics = Topic.all
+    @topic_list = "<ul>"
+    @topics.each do |topic|
+      @topic_list += "<li><a href='/topics/#{topic.urlify}'>#{topic.title}</a></li>"
+    end
+    @topic_list += "</ul>"
 
-  get '/login/?' do
-    unless logged_in?
-      erb :login
-    else
-      redirect '/'
-    end
+    erb :index, :locals => { :current_user => @current_user, :topics => @topic_list }
   end
 
   get '/facebook/connect/?' do
     session['oauth'] = Facebook::OAuth.new(FB_APP_ID, FB_SECRET, base_url + '/callback')
     redirect session['oauth'].url_for_oauth_code()
+  end
+
+  get '/twitter/connect/?' do
+    redirect '/'
   end
 
   get '/logout/?' do
@@ -40,17 +42,17 @@ class Routes < Sinatra::Base
 	redirect '/'
   end
 
+  get '/topic/:topic_title/?' do
+    
+  end
+
   helpers do
     def base_url
       @base_url ||= "#{request.env['rack.url_scheme']}://#{request.env['HTTP_HOST']}"
     end
 
-    def logged_in?
-      session['current_user'] ? true : false
-    end
-
-    def link_to (url, display)
-      "<a href='/#{url}'>#{display}</a>"
+    def link_to (url, display, a_class)
+      "<a href='/#{url}' class='#{a_class}'>#{display}</a>"
     end
   end
 end
