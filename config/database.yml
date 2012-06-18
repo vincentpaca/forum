@@ -1,0 +1,15 @@
+development:
+  host: localhost
+  database: forum
+  logger: false
+
+test:
+  host: localhost
+  database: forum
+  logger: false
+
+production:
+  host: localhost
+  database: forum
+  logger: false
+
