@@ -1,11 +1,4 @@
-*.yml
-
-############
-## Windows
-############
-
-# Windows image file caches
+config/database.yml
+config/api.yml
 Thumbs.db
-
-# Folder config file
 Desktop.ini
