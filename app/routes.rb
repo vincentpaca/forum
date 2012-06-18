@@ -11,7 +11,7 @@ class Routes < Sinatra::Base
     @topics = Topic.all
     @topic_list = "<ul>"
     @topics.each do |topic|
-      @topic_list += "<li><a href='/topics/#{topic.urlify}'>#{topic.title}</a></li>"
+      @topic_list += "<li><a href='/topics/#{topic.code}'>#{topic.title}</a></li>"
     end
     @topic_list += "</ul>"
 
@@ -42,8 +42,10 @@ class Routes < Sinatra::Base
 	redirect '/'
   end
 
-  get '/topic/:topic_title/?' do
-    
+  #t0d0: this should be a json reply
+  get '/topics/:code/?' do |code|
+    @topic = Topic.where(code: code).first
+    @posts = @topic.posts
   end
 
   helpers do
