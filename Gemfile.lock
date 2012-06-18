@@ -7,6 +7,7 @@ GEM
     activesupport (3.2.1)
       i18n (~> 0.6)
       multi_json (~> 1.0)
+    addressable (2.2.8)
     backports (2.6.1)
     bson (1.6.4)
     bson_ext (1.6.4)
@@ -14,8 +15,15 @@ GEM
     builder (3.0.0)
     daemons (1.1.8)
     eventmachine (1.0.0.beta.4.1-x86-mingw32)
+    faraday (0.7.6)
+      addressable (~> 2.2)
+      multipart-post (~> 1.1)
+      rack (~> 1.1)
     i18n (0.6.0)
     json (1.7.3)
+    koala (1.4.0)
+      faraday (~> 0.7.0)
+      multi_json (~> 1.0)
     mongo (1.6.2)
       bson (~> 1.6.2)
     mongoid (2.4.11)
@@ -23,6 +31,7 @@ GEM
       mongo (<= 1.6.2)
       tzinfo (~> 0.3.22)
     multi_json (1.1.0)
+    multipart-post (1.1.5)
     rack (1.4.1)
     rack-protection (1.2.0)
       rack
@@ -52,6 +61,7 @@ PLATFORMS
 DEPENDENCIES
   bson_ext
   json
+  koala
   mongoid
   rack
   sinatra
