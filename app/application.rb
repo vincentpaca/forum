@@ -3,9 +3,17 @@ require 'sinatra/base'
 require 'sinatra/reloader' if development?
 require 'json'
 require 'mongoid'
+require 'yaml'
 
+#load db
 Mongoid.load!('./config/database.yml')
 
+#load api keys
+FB_APP_ID = YAML::load(File.open('./config/api.yml'))['facebook']['app_id']
+FB_SECRET = YAML::load(File.open('./config/api.yml'))['facebook']['secret']
+
+  
+#require models
 require_relative 'routes'
 require_relative 'models'
 
