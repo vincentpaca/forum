@@ -8,23 +8,27 @@ class User
   def first_name
     self.name.split.first
   end
-
+  
+  has_many :posts
 end
 
 class Topic
   include Mongoid::Document
 
   field :title, type: String
+  field :code, type: String
   
-  validates_uniqueness_of :title
-
-  def urlify
-    self.title.downcase.gsub(" ", "_")
-  end
+  validates_uniqueness_of :title, :code
+  
+  has_many :posts
 end
 
-class String
-  def titlefy
-    self.split("_").each { |word| word.capitalize! }.join(" ")
-  end
+class Post
+  include Mongoid::Document
+  
+  belongs_to :topic
+  belongs_to :user
+  
+  field :title, type: String
+  field :content, type: String
 end
