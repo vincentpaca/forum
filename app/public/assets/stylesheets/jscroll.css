@@ -1,0 +1,7 @@
+.scrollable {
+	height: 500px;
+	overflow: auto;
+}
+.scrollable:focus{
+  outline: none;
+}
