@@ -1,8 +1,10 @@
 require 'rubygems'
 require 'bundler'
 
+APP_ROOT = File.expand_path(File.dirname(__FILE__))
+
 Bundler.require
 
-require './app/routes/application.rb'
+require './app/application.rb'
 
 run Application
