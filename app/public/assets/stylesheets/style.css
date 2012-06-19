@@ -78,7 +78,7 @@ ul,h1,h2,h3,h4,fieldset{
 }
 
 a.social-login{
-    background: url(../images/sign-in.png) no-repeat;
+    background: url(/assets/images/sign-in.png) no-repeat;
     height: 34px;
     width: 184px;
     display: inline-block;
