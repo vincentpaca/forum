@@ -12,6 +12,7 @@ class User
   end
   
   has_many :posts
+  has_many :comments
 end
 
 class Topic
@@ -32,7 +33,19 @@ class Post
  
   belongs_to :topic
   belongs_to :user
+  has_many :comments
   
   field :title, type: String
+  field :content, type: String
+end
+
+class Comment
+  include Mongoid::Document
+  include Mongoid::Timestamps::Created
+  include Mongoid::Timestamps::Updated
+
+  belongs_to :post
+  belongs_to :user
+
   field :content, type: String
 end
