@@ -10,6 +10,13 @@ class User
   def first_name
     self.name.split.first
   end
+
+  def is_online
+    now = Time.now.to_i
+    login = self.updated_at.to_i
+
+    (now - login).floor / 60 < 10
+  end
   
   has_many :posts
   has_many :comments
