@@ -1,5 +1,7 @@
 class User
   include Mongoid::Document
+  include Mongoid::Timestamps::Created
+  include Mongoid::Timestamps::Updated
   
   field :fb_id, type: Integer
   field :name, type: String
@@ -25,7 +27,9 @@ end
 
 class Post
   include Mongoid::Document
-  
+  include Mongoid::Timestamps::Created
+  include Mongoid::Timestamps::Updated
+ 
   belongs_to :topic
   belongs_to :user
   
