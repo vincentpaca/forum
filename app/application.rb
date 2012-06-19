@@ -11,6 +11,8 @@ Mongoid.load!('./config/database.yml')
 #load api keys
 FB_APP_ID = YAML::load(File.open('./config/api.yml'))['facebook']['app_id']
 FB_SECRET = YAML::load(File.open('./config/api.yml'))['facebook']['secret']
+TW_KEY = YAML::load(File.open('./config/api.yml'))['twitter']['key']
+TW_SECRET = YAML::load(File.open('./config/api.yml'))['twitter']['secret']
 
   
 #require models
