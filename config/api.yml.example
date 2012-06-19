@@ -1,3 +1,7 @@
 facebook:
   app_id: "xxxx"
   secret: "xxxx"
+  
+twitter:
+  key: "xxxx"
+  secret: "xxxx"
