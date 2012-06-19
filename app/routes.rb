@@ -1,4 +1,6 @@
 require 'koala'
+require 'twitter'
+require 'oauth'
 require 'json'
 
 class Routes < Sinatra::Base
@@ -28,12 +30,16 @@ class Routes < Sinatra::Base
   end
 
   get '/facebook/connect/?' do
-    session['oauth'] = Facebook::OAuth.new(FB_APP_ID, FB_SECRET, base_url + '/callback')
+    session['oauth'] = Facebook::OAuth.new(FB_APP_ID, FB_SECRET, base_url + '/facebook/callback')
     redirect session['oauth'].url_for_oauth_code()
   end
 
   get '/twitter/connect/?' do
-    redirect '/'
+    oauth = OAuth::Consumer.new(TW_KEY, TW_SECRET, :site => 'http://api.twitter.com', :request_endpoint => 'http://api.twitter.com', :sign_in => true)
+    request = oauth.get_request_token(:oauth_callback => base_url + '/twitter/callback')
+    rsecret = request.secret
+    rtoken = request.token
+    redirect "http://api.twitter.com/oauth/authorize?oauth_token=#{rtoken}"
   end
 
   get '/logout/?' do
@@ -42,12 +48,17 @@ class Routes < Sinatra::Base
     redirect '/'
   end
 
-  get '/callback/?' do
+  get '/facebook/callback/?' do
     access_token = session['oauth'].get_access_token(params[:code])
     graph = Facebook::API.new(access_token)
     person = graph.get_object("me")
     session['current_user'] = User.find_or_create_by(:fb_id => person['id'], :name => person['name'], :access_token => access_token)
 	redirect '/'
+  end
+  
+  get '/twitter/callback/?' do
+    
+    
   end
 
   get '/topics/:id/?' do |id|
