@@ -1,0 +1,34 @@
+<div class="grid_8 alpha">
+  <%= erb :sidebar, :locals => {:topics => topics }, :template_engine => :erb %>
+  
+  <div class="grid_16 omega">
+    <div class="block">
+      <%= erb :login, :locals => { :current_user => current_user }, :template_engine => :erb %>
+      <div class="main-content view-single-topic">
+        <h1><%= post.title %></h1>
+        <div class="topic-block-list on-going-chat chat-block">
+          <ul>
+            <li class="first-post">
+              <div class="post-fixed">
+                <div class="post clearfix">
+                  <div class="grid_2 alpha">
+                  <div class="user-post-av"><img src="http://graph.facebook.com/<%= post.user.fb_id %>/picture"></div>
+                  </div>
+                  <div class="grid_13 omega">
+                    <div class="user-name"><span class="status"></span> <%= post.user.name %> </div>
+                    <div class="post-msg"><%= post.content %></div>
+                    <div class="post-meta">
+                      <ul>
+                        <li><%= time_ago(post.created_at) %></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li> 
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

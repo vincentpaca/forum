@@ -1,23 +1,14 @@
 <div class="grid_8 alpha">
-  <div class="block sidebar">
-    <h3>Topics <span class="sub-title">Join any conversation</div></h3>
-    <div class="topic-block-list chat-topics-sidebar">
-      <%= topics %>
-    </div>
-  </div>
-  
+  <%= erb :sidebar, :locals => {:topics => topics }, :template_engine => :erb %>
+    
   <div class="grid_16 omega">
     <div class="block">
-      <div class="user-wrapper">
-        <% if current_user.nil? %>
-          <%= link_to 'facebook/connect', "", "social-login fb-login" %>
-          <%= link_to 'twitter/connect', "", "social-login tw-login" %>
-        <% else %>
-          Sup, <%= current_user.first_name %>?
-          <%= link_to 'logout', "Sign out", "" %>
-        <% end %>
-      </div>
+      <%= erb :login, :locals => { :current_user => current_user }, :template_engine => :erb %>   
       <div class="main-content">
+        <h3>On going conversations...</h3>
+        <div class="topic-block-list on-going-chat">
+          <%= posts %>  
+        </div>
       </div>
     </div>
   </div>
