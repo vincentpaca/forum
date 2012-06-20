@@ -8,27 +8,10 @@ class Routes < Sinatra::Base
   enable :sessions
 
   get '/?' do
-    if session['current_user']
-      @current_user = session['current_user']
-    end
-    
-    @topics = Topic.all
-    @topic_list = "<ul>"
-    @topics.each do |topic|
-      @topic_list += "<li><a class='sidebar-topic' id='#{topic.id}' href='/topics/#{topic._id}'>#{topic.title}</a></li>"
-    end
-    @topic_list += "</ul>"
-
-    @posts = Post.all
-    @post_list = "<ul>"
-    @posts.each do |post|
-      @post_list += "<li><a class='post-list' id='#{post.id}' href='/posts/#{post._id}'>#{post.title}</a></li>"
-    end
-    @post_list += "</ul>"
-    
-    erb :index, :locals => { :current_user => @current_user, :topics => @topic_list, :posts => @post_list }
+    erb :index, :locals => { :current_user => current_user, :topics => topic_list, :posts => post_list(Post.all) }
   end
 
+  #auth ------
   get '/facebook/connect/?' do
     session['oauth'] = Facebook::OAuth.new(FB_APP_ID, FB_SECRET, base_url + '/facebook/callback')
     redirect session['oauth'].url_for_oauth_code()
@@ -60,58 +43,50 @@ class Routes < Sinatra::Base
     
     
   end
+  #end auth ------
 
   get '/topics/:id/?' do |id|
     @topic = Topic.find(id)
-    @posts = @topic.posts
-
-    @topics = Topic.all
-    @topic_list = "<ul>"
-    @topics.each do |topic|
-      @topic_list += "<li><a class='sidebar-topic' id='#{topic.id}' href='/topics/#{topic._id}'>#{topic.title}</a></li>"
-    end
-    @topic_list += "</ul>"
-
-    @post_list = "<ul>"
-    @posts.each do |post|
-      @post_list += "<li><a class='post-list' id='#{post.id}' href='/posts/#{post._id}'>#{post.title}</a></li>"
-    end
-    @post_list += "</ul>"
-
-    erb :index, :locals => { :current_user => @current_user, :topics => @topic_list, :posts => @post_list }
+    erb :index, :locals => { :current_user => current_user, :topics => topic_list, :posts => post_list(@topic.posts) }
   end
 
   get '/topics/:id/json' do |id|
-    @current_user = session['current_user']
     @topic = Topic.find(id)
-    @posts = @topic.posts
-
-    @post_list = "<ul>"
-    @posts.each do |post|
-      @post_list += "<li><a class='post-list' id='#{post.id}' href='/posts/#{post._id}'>#{post.title}</a></li>"
-    end
-    @post_list += "</ul>"
-
-    { :topic => @topic, :posts => @post_list }.to_json
+    { :topic => @topic, :posts => post_list(@topic.posts) }.to_json
   end
 
   get '/posts/:id/?' do |id|
-    @current_user = session['current_user']
     @post = Post.find(id)
     @topics = Topic.all
 
-    @topics = Topic.all
-    @topic_list = "<ul>"
-    @topics.each do |topic|
-      @topic_list += "<li><a class='sidebar-topic' id='#{topic.id}' href='/topics/#{topic._id}'>#{topic.title}</a></li>"
-    end
-    @topic_list += "</ul>"
-
-
-    erb :post, :locals => { :current_user => @current_user, :topics => @topic_list, :post => @post }
+    erb :post, :locals => { :current_user => current_user, :topics => topic_list, :post => @post }
   end
-
+  
+  #helpers ------
   helpers do
+    def topic_list
+      @topics = Topic.all
+      @topic_list = "<ul>"
+      @topics.each do |topic|
+        @topic_list += "<li><a class='sidebar-topic' id='#{topic.id}' href='/topics/#{topic._id}'>#{topic.title}</a></li>"
+      end
+      @topic_list += "</ul>"
+      @topic_list
+    end
+
+    def post_list(posts)
+      @post_list = "<ul>"
+      posts.each do |post|
+        @post_list += "<li><a class='post-list' id='#{post.id}' href='/posts/#{post._id}'>#{post.title}</a></li>"
+      end
+      @post_list += "</ul>"
+      @post_list
+    end
+
+    def current_user
+      session['current_user']
+    end
+
     def base_url
       @base_url ||= "#{request.env['rack.url_scheme']}://#{request.env['HTTP_HOST']}"
     end
@@ -154,8 +129,8 @@ class Routes < Sinatra::Base
          "#{(minutes / 1440).round} days"
      end
    end
-
   end
+
 end
 
 
