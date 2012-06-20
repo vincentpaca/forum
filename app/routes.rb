@@ -1,6 +1,6 @@
 require 'koala'
-require 'twitter'
 require 'oauth'
+require 'twitter'
 require 'json'
 
 class Routes < Sinatra::Base
@@ -18,11 +18,11 @@ class Routes < Sinatra::Base
   end
 
   get '/twitter/connect/?' do
-    oauth = OAuth::Consumer.new(TW_KEY, TW_SECRET, :site => 'http://api.twitter.com', :request_endpoint => 'http://api.twitter.com', :sign_in => true)
-    request = oauth.get_request_token(:oauth_callback => base_url + '/twitter/callback')
-    rsecret = request.secret
-    rtoken = request.token
-    redirect "http://api.twitter.com/oauth/authorize?oauth_token=#{rtoken}"
+    session['oauth'] = OAuth::Consumer.new(TW_KEY, TW_SECRET, { :site => 'http://api.twitter.com' })
+    request_token = session['oauth'].get_request_token(:oauth_callback => base_url + '/twitter/callback')
+    session['token'] = request_token.token
+    session['secret'] = request_token.secret
+    redirect "http://api.twitter.com/oauth/authorize?oauth_token=#{session['token']}"
   end
 
   get '/logout/?' do
@@ -40,8 +40,11 @@ class Routes < Sinatra::Base
   end
   
   get '/twitter/callback/?' do
-    
-    
+    request = OAuth::RequestToken.new(session['oauth'], session['token'], session['secret'])
+    access = request.get_access_token(:oauth_verifier => params[:oauth_verifier])
+    response = session['oauth'].request(:get, '/account/verify_credentials.json', access, { :scheme => :query_string })
+    user_info = JSON.parse(response.body)
+    user_info
   end
   #end auth ------
 
