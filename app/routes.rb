@@ -37,6 +37,9 @@ class Routes < Sinatra::Base
     graph = Facebook::API.new(access_token)
     person = graph.get_object("me")
     session['current_user'] = User.find_or_create_by(:fb_id => person['id'], :name => person['name'], :access_token => access_token)
+    if session['current_user']
+      session['current_user'].update_attribute(:last_login, Time.now)
+    end
     redirect '/'
   end
   
@@ -65,6 +68,10 @@ class Routes < Sinatra::Base
     @topics = Topic.all
 
     erb :post, :locals => { :current_user => current_user, :topics => topic_list, :post => @post }
+  end
+
+  get '/posts/new/?' do
+    
   end
   
   #helpers ------
