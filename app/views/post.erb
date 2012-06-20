@@ -12,7 +12,7 @@
                   <div class="user-post-av"><img src="http://graph.facebook.com/<%= post.user.fb_id %>/picture"></div>
                 </div>
                 <div class="grid_13 omega">
-                  <div class="user-name"><span class="status"></span> <%= post.user.name %> </div>
+                  <div class="user-name"><span class="status <%= post.user.is_online? ? 'online' : ''  %>"></span> <%= post.user.name %> </div>
                   <div class="post-msg"><%= post.content %></div>
                   <div class="post-meta">
                     <ul>
