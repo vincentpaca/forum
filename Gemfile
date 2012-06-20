@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 gem "rack"
 gem "thin"
-gem "eventmachine", "0.12.10"
+gem "eventmachine", "1.0.0.beta.4.1"
 gem "json"
 gem "mongoid"
 gem "bson_ext"
