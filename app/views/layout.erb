@@ -15,6 +15,7 @@
   </head>
   <body>
     <div class="container_24">
+      <%= erb :sidebar, :locals => { :topics => topics } %>
       <%= yield %>
     </div>
   </body>
