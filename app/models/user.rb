@@ -7,6 +7,7 @@ class User
   field :name, type: String
   field :access_token, type: String
   field :last_login, type: DateTime
+  field :is_admin, type: Boolean
 
   def first_name
     self.name.split.first
@@ -17,6 +18,10 @@ class User
     login = self.last_login.to_i
 
     (now - login).floor / 60 < 10
+  end
+
+  def is_admin?
+    self.is_admin
   end
   
   has_many :posts
