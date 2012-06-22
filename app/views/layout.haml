@@ -1,0 +1,15 @@
+!!!
+%html{ :lang => "en" }
+  %head
+    %meta{ :charset => "utf-8" }
+    %title WE HAVE NO TITLE YET
+    -["960.css", "jscroll.css", "style.css"].each do |style|
+      %link{ :rel => "stylesheet", :href => "/assets/stylesheets/#{style}", :type => "text/css", :media => "screen" }
+    -["jquery.min.js", "jquery.nicescroll.min.js", "application.js"].each do |js|
+      %script{ :type => "text/javascript", :src => "/assets/js/#{js}" }
+    :javascript
+      var base_url = "#{base_url}";
+  %body
+    .container_24
+      = haml :sidebar, :locals => { :topics => topics }
+      = yield

@@ -1,0 +1,7 @@
+.grid_16.omega
+  .block
+    =haml :login, :locals => { :current_user => current_user }
+    .main-content
+      <h3>On going conversations...</h3>
+      .topic-block-list.on-going-chat
+        =posts

@@ -1,0 +1,26 @@
+.grid_16.omega
+  .block
+    =haml :login, :locals => { :current_user => current_user }
+    .main-content.view-single-topic
+      %h1 
+        =post.title
+      .topic-block-list.on-going-chat.chat-block
+        %ul
+          %li{ :class => "first-post" }
+            .post-fixed
+              .post.clearfix
+                .grid_2.alpha
+                  .user-post-av 
+                    %img{ :src => "http://graph.facebook.com/#{post.user.fb_id}/picture" }
+                .grid_13.omega
+                  .user-name
+                    %span{ :class => "status #{post.user.is_online? ? 'online' : ''}" }
+                    =post.user.name
+                  .post-msg
+                    =post.content
+                  .post-meta
+                    %ul
+                      %li
+                        =time_ago(post.created_at)
+      .topic-block-list.on-going-chat.chat-block.scrollable{ :style => "overflow-y: hidden", :tabindex => "5000" }
+        %ul

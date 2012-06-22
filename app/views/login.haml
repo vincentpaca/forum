@@ -1,0 +1,7 @@
+.user-wrapper
+  -if current_user.nil?
+    =link_to 'facebook/connect', "", "social-login fb-login"
+    =link_to 'twitter/connect', "", "social-login tw-login"
+  -else
+    Sup, =current_user.first_name ?
+    =link_to 'logout', "Sign out", ""
