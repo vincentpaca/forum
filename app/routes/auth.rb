@@ -1,4 +1,4 @@
-class Application<Sinatra::Application
+class Application < Sinatra::Application
   include Koala
 
   get '/facebook/connect/?' do
