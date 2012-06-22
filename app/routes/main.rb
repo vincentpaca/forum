@@ -21,8 +21,4 @@ class Application < Sinatra::Application
     haml :post, :locals => { :current_user => current_user, :topics => topic_list, :post => @post }
   end
 
-  get '/posts/new/?' do
-    
-  end
- 
 end
