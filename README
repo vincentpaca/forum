@@ -1,1 +1,7 @@
-A real-time bulletin board application built with Sinatra
+A real-time bulletin board application built with Sinatra.
+
+Run:
+  bundle
+  rackup
+
+create your own config/api.yml and config/database.yml
