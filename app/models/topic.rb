@@ -2,9 +2,9 @@ class Topic
   include Mongoid::Document
 
   field :title, type: String
-  field :code, type: String
   
-  validates_uniqueness_of :title, :code
+  validates_presence_of :title
+  validates_uniqueness_of :title
   
   has_many :posts
 end
