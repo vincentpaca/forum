@@ -1,7 +1,7 @@
 module ApplicationHelpers
     
   def current_user
-    session['current_user']
+    session['current_user'].present? ? session['current_user'] : nil
   end
 
   def base_url
