@@ -1,11 +1,8 @@
 class Application < Sinatra::Application
 
   before '/admin/*' do
-    if current_user.present?
-      redirect '/' unless current_user.is_admin?
-    else
-      redirect '/'
-    end
+    redirect '/' unless current_user.present?
+    redirect '/' unless current_user.is_admin?
   end
 
   get '/admin/?' do
