@@ -10,11 +10,12 @@ class Application < Sinatra::Application
   end
 
   get '/admin/new_topic/?' do
-    "new topic here"
+    haml :new_topic, :layout => :admin_layout, :locals => { :topics => Topic.all }
   end
 
   post '/admin/save_topic/?' do
-
+    Topic.create!(:title => params[:title])
+    redirect '/admin/new_topic'
   end
 
 end
